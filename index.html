@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>TABLE</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="container-fluid">
+                <table class="_table">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>mobile</th>
+                            <th>emailId</th>
+
+                            <th>
+                                <div class="aaction_container" onclick="create_tr('table_body')">
+                                    <button class="success">Add</button>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="table_body">
+                        <tr>
+                            <td><input type="text" class="form_control" placeholder="id" id="id"></td>
+                            <td><input type="text" class="form_control" placeholder="name" name="name"></td>
+                            <td><input type="tel" class="form_control" placeholder="mobile" name="mobile"></td>
+                            <td><input type="email" class="form_control" placeholder="email" name="email"></td>
+                            <td>
+                                <div class="action_container">
+                                    <button class="danger" onclick="remove_tr(this)">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="right-box"></div>
+        </div>
+        <script>
+            const form = document.querySelector('form');
+
+
+            function create_tr(table_id) {
+                let table_body = document.getElementById(table_id);
+                first_tr = table_body.firstElementChild
+                tr_clone = first_tr.cloneNode(true);
+                table_body.append(tr_clone)
+                const myformdata = new FormData()
+
+                clean_first_tr(table_body.firstElementChild);
+
+                event.preventDefault();
+                const formdata = new FormData(table_body)
+                console.log(formdata);
+
+            }
+
+            function clean_first_tr(firstTr) {
+                let children = firstTr.children;
+
+                children = Array.isArray(children) ? children : Object.values(children)
+                children.forEach(child => {
+                    if (child !== firstTr.lastElementChild) {
+                        child.firstElementChild.value = ''
+                    }
+                });
+            }
+
+            function remove_tr(This) {
+                if (This.closest('tbody').childElementCount == 1) {
+                    alert("You don't have permssion to delete this")
+                }
+                else {
+                    This.closest('tr').remove();
+                }
+            }
+
+        </script>
+    </body>
+
+</html>
